@@ -20,52 +20,48 @@ public class B {
 		for(int contCasos=0;contCasos<casos;contCasos++){
 			str_mensaje=scan.nextLine();
 			char[] char_mensaje=str_mensaje.toCharArray();
-			int int_cantInfo=char_mensaje.length;
-			int int_bombas=0;
-			int int_paredes=0;
-			int int_tictac=0;
+			int int_longitudMensaje=char_mensaje.length;
+			int int_cantBombas=0;
+			boolean bool_explosionPendienteAdelante=false;
+			int int_actualNumParedes=0;
+			int int_cantParedesPorExplotarAdelante=0;
 			int int_paredesDemolidas=0;
-			for(int int_analizadorMensaje=0;int_analizadorMensaje<int_cantInfo;int_analizadorMensaje++){
+			for(int int_analizadorMensaje=0;int_analizadorMensaje<int_longitudMensaje;int_analizadorMensaje++){
 							
-					if(char_mensaje[int_analizadorMensaje]=='W' && int_bombas>=1 && int_tictac>0){
-						int_tictac--;
-						int_paredes++;
-					}else if(char_mensaje[int_analizadorMensaje]=='W' && int_tictac==0 && int_paredes>0 && int_bombas>0){
-						if(int_paredes<=2){
-							int_paredesDemolidas=int_paredesDemolidas+int_paredes;
-							int_paredes=1;
-						}else{
-							int_paredes++;
+					if(char_mensaje[int_analizadorMensaje]=='W' && int_cantBombas>=1){
+						int_cantParedesPorExplotarAdelante--;
+						int_actualNumParedes++;
+						if(int_cantParedesPorExplotarAdelante<=0 && bool_explosionPendienteAdelante==true){//explodes forward walls
+							int_paredesDemolidas=int_paredesDemolidas+1;
+							bool_explosionPendienteAdelante=false;
+							int_actualNumParedes=int_actualNumParedes-1;	
+						}else if(int_cantParedesPorExplotarAdelante==1 && bool_explosionPendienteAdelante==true){
+							int_paredesDemolidas=int_paredesDemolidas+1;
+							int_actualNumParedes--;
 						}
-						
-					}else if(char_mensaje[int_analizadorMensaje]=='W'){
-						int_paredes++;
-						
-					}else if(char_mensaje[int_analizadorMensaje]=='B' && int_bombas>=1){
-						int_bombas++;
-						int_tictac=2;
-						if(int_paredes>0 && int_paredes<=2){
-							int_paredesDemolidas=int_paredesDemolidas+int_paredes;
-						}else if(int_paredes>0){
-							
+					}else if(char_mensaje[int_analizadorMensaje]=='W'){//Before first bomb appears
+						int_actualNumParedes++;
+					}else if(char_mensaje[int_analizadorMensaje]=='B' && int_cantBombas>=1){
+						int_cantBombas++;
+						bool_explosionPendienteAdelante=true;
+						int_cantParedesPorExplotarAdelante=2;
+						if(int_actualNumParedes<=2){//explodes backward walls
+							int_paredesDemolidas=int_paredesDemolidas+int_actualNumParedes;
+						}else if(int_actualNumParedes>2){
 							int_paredesDemolidas=int_paredesDemolidas+2;
-							
 						}
-						int_paredes=0;
-
-					}else if(char_mensaje[int_analizadorMensaje]=='B'){
-						int_bombas++;
-						int_paredesDemolidas=int_paredesDemolidas+2;
-						int_paredes=0;
-						int_tictac=2;
-					}	
-					
-					
-					
-					
-					
-					
-				
+						int_actualNumParedes=0;
+					}else if(char_mensaje[int_analizadorMensaje]=='B'){//First bomb
+						int_cantBombas++;
+						if(int_actualNumParedes>0 && int_actualNumParedes<=2){
+							int_paredesDemolidas=int_paredesDemolidas+int_actualNumParedes;
+						}else if(int_actualNumParedes>2){
+							int_paredesDemolidas=int_paredesDemolidas+2;
+						}else{}
+							int_actualNumParedes=0;
+							int_cantParedesPorExplotarAdelante=2;
+							bool_explosionPendienteAdelante=true;
+					}		
 			}
 			System.out.println(int_paredesDemolidas);
 		
