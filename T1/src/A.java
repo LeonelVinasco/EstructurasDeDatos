@@ -20,20 +20,19 @@ public class A {
 		String str_nums[];
 		str_cantNums=scan.nextLine().split(" ");
 		str_nums=scan.nextLine().split(" ");
-		int int_nums[]= new int[Integer.parseInt(str_cantNums[0])];
+		long long_nums[]= new long[Integer.parseInt(str_cantNums[0])];
 		//Fill int_nums array with values of str_nums
 		for (int contadorNums=0; contadorNums < Integer.parseInt(str_cantNums[0]);contadorNums++){
-			int_nums[contadorNums]=Integer.parseInt(str_nums[contadorNums]);
+			long_nums[contadorNums]=Long.parseLong(str_nums[contadorNums]);
 		}
 		Arrays.sort(int_nums);//order the array with sort method
 		//Multiply the last number with the previous one 
-		//System.out.println(int_nums[Integer.parseInt(str_cantNums[0])-1]*int_nums[Integer.parseInt(str_cantNums[0])-2]);
-		int int_productoSuperior=int_nums[Integer.parseInt(str_cantNums[0])-1]*int_nums[Integer.parseInt(str_cantNums[0])-2];
-		int int_productoInferior=int_nums[0]*int_nums[1];
-		if (productoSuperior>=productoInferior){
-			System.out.println(productoSuperior);	
+		long long_productoSuperior=long_nums[Integer.parseInt(str_cantNums[0])-1]*long_nums[Integer.parseInt(str_cantNums[0])-2];
+		long long_productoInferior=long_nums[0]*long_nums[1];
+		if (long_productoSuperior>=long_productoInferior){
+			System.out.println(long_productoSuperior);	
 		}else{
-			System.out.println(productoInferior);	
+			System.out.println(long_productoInferior);	
 		}
 	}
 
