@@ -27,7 +27,14 @@ public class A {
 		}
 		Arrays.sort(int_nums);//order the array with sort method
 		//Multiply the last number with the previous one 
-		System.out.println(int_nums[Integer.parseInt(str_cantNums[0])-1]*int_nums[Integer.parseInt(str_cantNums[0])-2]);
+		//System.out.println(int_nums[Integer.parseInt(str_cantNums[0])-1]*int_nums[Integer.parseInt(str_cantNums[0])-2]);
+		int int_productoSuperior=int_nums[Integer.parseInt(str_cantNums[0])-1]*int_nums[Integer.parseInt(str_cantNums[0])-2];
+		int int_productoInferior=int_nums[0]*int_nums[1];
+		if (productoSuperior>=productoInferior){
+			System.out.println(productoSuperior);	
+		}else{
+			System.out.println(productoInferior);	
+		}
 	}
 
 }
