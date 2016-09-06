@@ -47,9 +47,11 @@ static StringBuilder builder = new StringBuilder();
 			
 			permutacion(str_letras,"",r,r);	
 				
-			System.out.println(builder.toString());	
+			
+			String[] elementos=builder.toString().split("");
+			for(String e : elementos) 
+				System.out.println(e);
 			}
-		
 	}
 	
 	private static void permutacion(String[] elem, String act, int n, int r){
@@ -61,7 +63,7 @@ static StringBuilder builder = new StringBuilder();
 		}else{
 			for(int i=0;i<r;i++){
 				//if (!act.contains(elem[i])){
-					permutacion(elem, act+elem[i]+",", n-1,r);
+					permutacion(elem, act+elem[i]+"", n-1,r);
 				//}
 				
 				
