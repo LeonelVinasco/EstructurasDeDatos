@@ -1,0 +1,21 @@
+7 12
+100 120
+51 90
+112 113
+80 84
+77 87
+52 86
+8 42
+priorizar 77
+priorizar 112
+ejecutar
+ejecutar
+ejecutar
+priorizar 51
+priorizar 52
+ejecutar
+priorizar 8
+ejecutar
+ejecutar
+ejecutar
+
