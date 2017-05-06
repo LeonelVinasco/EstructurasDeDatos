@@ -1,9 +1,10 @@
 package parcial2;
+
 import java.math.*;
 import java.util.*;
 import java.io.*;
 
-public class Main {
+public class Main2 {
   /**
    * Complete la clase Proceso segun la descripcion del problema y 
    * para que pueda ser usada con el MonticuloMinimo.
@@ -26,10 +27,17 @@ public class Main {
       if(this.im<obj.im){
           return 1;
       }else if(this.im>obj.im){
-           return -1;
+          return -1;
       }else{
-      
-      return 0;}
+    	  
+    	  if(this.id<obj.id){
+              return -1;
+          }else if(this.id>obj.id){
+              return 1;
+          }else{
+    	  
+    	  
+      return 0;}}
     }
     
     
@@ -121,18 +129,21 @@ public class Main {
     
     
     
-    public int priorizar(int k) {
+    public void priorizar(int k) {
       
        int temp= this.consultar().im;
        this.datos.get(k).im=temp+1;
-       return temp;
+       desplazarArriba(k);
+       
     }
+   
+    
   }
   
   public static void main(String args[]) throws FileNotFoundException {
 	  Scanner scan;
 	  int linea=1;
-	  File f = new File("in02.txt");
+	  File f = new File("in01.txt");
 		if(f.exists()){
 			scan = new Scanner(f);
 		}else{
@@ -174,25 +185,21 @@ public class Main {
 		boolean mismo=false;
 		String opcion = datos[0];
         Proceso tempPro=new Proceso(0,0);
+        int idt;
+        int size;
 		if(opcion.compareTo("ejecutar")==0){
 			
-			System.out.println(j+" "+linea+" "+maxheap.consultar().id);
+			System.out.println(maxheap.consultar().id);
 			linea++;
 			maxheap.extraer();
-			
+			//if(linea==1500)break;
 		}else if(opcion.compareTo("priorizar")==0){
-						prior=maxheap.consultar().im;
-						//maxheap.datos.
-						
-						for(int k=0;k<maxheap.datos.size();k++){
-							if (maxheap.datos.get(k).id==Integer.parseInt(datos[1])){
-							
-								if(maxheap.datos.get(k).im==prior){
-									mismo=true;
-								}else{
-									mismo=false;}
-								
-							maxheap.priorizar(k);
+			            idt=Integer.parseInt(datos[1]);
+						prior=maxheap.consultar().im;	
+						size=maxheap.datos.size();
+						for(int k=0;k<size;k++){
+							if (maxheap.datos.get(k).id==idt){
+								  maxheap.priorizar(k);
 							break;
 							}
 							   
@@ -203,44 +210,7 @@ public class Main {
 				   
 			}
 			
-//	idTemp=maxheap.datos.get(k).id;
-//	
-//	if (idTemp==Integer.parseInt(datos[1])){
-//	
-//		if(maxheap.datos.get(k).im==priorRoot){
-//			mismo=true;
-//		}else{
-//			mismo=false;}
-//	
-//		
-//		if(mismo==true && idTempRoot==idTemp){
-//			tempPro=new Proceso(idTempRoot,priorRoot+1);
-//		}else if(mismo==false){
-//			tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
-//		}else{
-//			tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
-//		}
-//		
-//	maxheap.datos.set(k, tempPro);//.remove(k);
-//	break;
-//	}
-	  
-			
-//			if (mismo==false){
-//				tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
-//			}else if(mismo==true && maxheap.datos.get(0).id==idTemp){
-//				tempPro=new Proceso(idTempRoot,priorRoot);
-//			}else{
-//				tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot);
-//			}
-//			maxheap.insertar(tempPro);	
-			}
-			//error: Linea 4308 79245--> Salida deberia ser: 35606
-		//Objeto insertado: 35606 75558 Linea de entrada: 4308
-		//priorizar 35606 Linea:5508
-		//79245 75937 linea: 2684
-		
-		
+}
 		
 	}
 
