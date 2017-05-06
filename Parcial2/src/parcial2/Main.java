@@ -191,22 +191,22 @@ public class Main {
 						mismo=true;
 					}else{
 						mismo=false;}
+				
 					
-				maxheap.datos.remove(k);
+					if(mismo==true && idTempRoot<idTemp){
+						tempPro=new Proceso(idTempRoot,priorRoot+1);
+					}else if(mismo==false){
+						tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
+					}else{
+						tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
+					}
+				maxheap.datos.set(k, tempPro);//.remove(k);
 				break;
 				}
 				   
 			}
 			
-			if(mismo==true && idTempRoot==idTemp){
-				tempPro=new Proceso(idTempRoot,priorRoot+1);
-			}else if(mismo==false){
-				tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
-			}else if(mismo==true){
-				tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot);
-			}else{
-				
-			}
+
 			
 //			if (mismo==false){
 //				tempPro=new Proceso(Integer.parseInt(datos[1]),priorRoot+1);
