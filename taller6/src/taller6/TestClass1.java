@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.Set;
 import java.util.TreeMap;
 
 import taller6.MainDijkstral.Arco;
-import taller6.TestClass1.Arista;
+import taller6.TestClass1.Arco;
 
 //implementacion algortmo dikstra
 public class TestClass1 {
@@ -23,7 +24,7 @@ public class TestClass1 {
 	static class Nodo implements Comparable<Nodo>
 	{
 	    public final String name;
-	    public Arista[] adjacencies;
+	    public Arco[] adjacencies;
 	    public Integer minDistance = Integer.MAX_VALUE;
 	    public Nodo previous;
 	    public Nodo(String argName) { name = argName; }
@@ -37,11 +38,11 @@ public class TestClass1 {
 	    }
 	}
 
-	static class Arista
+	static class Arco
 	{
 	    public final Nodo target;
 	    public final Integer weight;
-	    public Arista(Nodo argTarget, Integer argWeight)
+	    public Arco(Nodo argTarget, Integer argWeight)
 	    { target = argTarget; weight = argWeight; }
 	    public String toString() { return "Dest "+target +" peso "+String.valueOf(weight); }
 	   //public void insertar(Nodo argTarget, double argWeight){target = argTarget; weight = argWeight;}
@@ -49,6 +50,38 @@ public class TestClass1 {
 	
 	public static class Dijkstra
 	{
+		
+		public static void buscaCaminos(Integer star,HashMap<Integer,HashMap<Integer,Arco>> vecinos)
+	    {
+	        System.out.println("-------------- SHORTEST PATH COMPUTE PHASE -----------");
+	        vecinos.get(star).
+	        source.minDistance = 0;
+	        PriorityQueue<Nodo> vertexQueue = new PriorityQueue<Nodo>();
+	        vertexQueue.add(source);
+
+	        while (!vertexQueue.isEmpty()) {
+	            Nodo u = vertexQueue.poll(); 
+
+	            System.out.println("visited at vertices " + u.name);
+	            // Visit each edge exiting u
+	           int l=u.adjacencies.length;
+	           // for (Arista e : u.adjacencies) {
+	            	for(int k=0;k<u.adjacencies.length;k++){
+	                Nodo v = u.adjacencies[k].target;
+	                System.out.println("check at vertices " + v.name);
+	                Integer weight = u.adjacencies[k].weight;
+	                Integer distanceThroughU = u.minDistance + weight; 
+	                if (distanceThroughU < v.minDistance) { 
+	                    System.out.println("Path from vertices " + u.name + " is shorter than old path");
+	                    vertexQueue.remove(v); 
+	                    v.minDistance = distanceThroughU ; 
+	                    v.previous = u; 
+	                    vertexQueue.add(v); 
+	                }
+	            }
+	           
+	        }
+	    }
 	    public static void computePaths(Nodo source)
 	    {
 	        System.out.println("-------------- SHORTEST PATH COMPUTE PHASE -----------");
@@ -115,7 +148,7 @@ public class TestClass1 {
         	numCon=Integer.parseInt(entrada[1]);
         	origen=Integer.parseInt(entrada[2]);
         	destino=Integer.parseInt(entrada[3]);
-        	TreeMap<Integer,TreeMap<Integer,Arista>> vertices = new TreeMap<Integer,TreeMap<Integer,Arista>>();//matriz
+        	HashMap<Integer,HashMap<Integer,Arco>> vertices = new HashMap<Integer,HashMap<Integer,Arco>>();//matriz
         	ArrayList<Integer> adj = new ArrayList<Integer>(); //lista adjacencia
         	
             for(int i=0; i< numCon;i++){//arma la matriz con los valores ingresados 
@@ -124,13 +157,13 @@ public class TestClass1 {
             	Integer nodoSec=Integer.parseInt(entrada[1]);
             	Integer pesoCon=Integer.parseInt(entrada[2]);
             	
-            	TreeMap<Integer,Arista> aux=new TreeMap<Integer,Arista>();
-            	TreeMap<Integer,Arista> aux2=new TreeMap<Integer,Arista>();
+            	HashMap<Integer,Arco> aux=new HashMap<Integer,Arco>();
+            	HashMap<Integer,Arco> aux2=new HashMap<Integer,Arco>();
             	Nodo tempNod=new Nodo(entrada[1]);
-            	Arista temp=new Arista(tempNod,pesoCon);
+            	Arco temp=new Arco(tempNod,pesoCon);
             	
             	Nodo tempNod2=new Nodo(entrada[0]);
-            	Arista temp2=new Arista(tempNod2,pesoCon);
+            	Arco temp2=new Arco(tempNod2,pesoCon);
 
             	if (!vertices.containsKey(nodoPrim)){
             		 
@@ -155,20 +188,20 @@ public class TestClass1 {
           
            
           // vertices.get(1).values().toArray(arreglo);
-            Map<String,Nodo> vertix = new LinkedHashMap<String,Nodo>();
+            HashMap<String,Nodo> vertix = new HashMap<String,Nodo>();
            // Arista[] arreglo= new Arista[tree.size()];
             
-            Set<Entry<Integer, TreeMap<Integer, Arista>>> set = vertices.entrySet();
+            Set<Entry<Integer, HashMap<Integer, Arco>>> set = vertices.entrySet();
             
             // Get an iterator
-            Iterator<Entry<Integer, TreeMap<Integer, Arista>>> it = set.iterator();
+            Iterator<Entry<Integer, HashMap<Integer, Arco>>> it = set.iterator();
          
             // Display elements
             while(it.hasNext()) {
               Map.Entry me = (Map.Entry)it.next();
               System.out.print("Key is: "+me.getKey() + " & ");
               System.out.println("Value is: "+me.getValue());  
-              Arista[] arreglo= new Arista[vertices.get(me.getKey()).size()];
+              Arco[] arreglo= new Arco[vertices.get(me.getKey()).size()];
               vertices.get(me.getKey()).values().toArray(arreglo);
              
               //Arista nodT= me.getValue();

@@ -1,13 +1,6 @@
 package taller6;
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.PriorityQueue;
-import java.util.StringTokenizer;
+
+import java.util.*;
 
 public class MainDijkstral {
 
@@ -84,57 +77,45 @@ public class MainDijkstral {
     }
     
     public static void main(String args[]) throws Exception{
-        //System.setIn(new FileInputStream("input.txt"));
-        BufferedReader br  =  new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
-        
-        int T =  Integer.parseInt(br.readLine());
-        int n, m;
-        
-        for (int cas = 0; cas < T ; cas++) {
-            n =  Integer.parseInt(br.readLine());
-            m =  Integer.parseInt(br.readLine());
-            
-            pesos = new int[n][m];
-            
-            for (int i = 0; i < n ; i++) {
-                st = new StringTokenizer(br.readLine());
-                for (int j = 0; j < m; j++) {
-                    pesos[i][j] = Integer.parseInt(st.nextToken());
-                }
-            }
-            
-            int nNodos = n * m;
-            int source = 0, target = n * m - 1, nodoU, nodoV;
-            grafo = new ArrayList[nNodos];
-            
-            for (int i = 0 ; i < nNodos; i++) {
+    	Scanner scan=new Scanner(System.in);
+        String[] entrada;
+        entrada=scan.nextLine().split(" ");
+        int casos=Integer.parseInt(entrada[0]);
+        int numComps;
+        int numCon;
+        int origen;
+        int destino;
+        for (int cas = 0; cas < casos ; cas++) {
+        	 System.out.println("Caso #"+cas+1+":");
+        	entrada=scan.nextLine().split(" ");
+        	numComps=Integer.parseInt(entrada[0]);
+        	numCon=Integer.parseInt(entrada[1]);
+        	origen=Integer.parseInt(entrada[2]);
+        	destino=Integer.parseInt(entrada[3]);
+        	HashMap<Integer,HashMap<Integer,Arco>> vertices = new HashMap<Integer,HashMap<Integer,Arco>>();//matriz
+        	ArrayList<Integer> adj = new ArrayList<Integer>(); //lista adjacencia
+        	
+        	grafo = new ArrayList[numComps];
+        	for (int i = 0 ; i < numComps; i++) {
                 grafo[i] = new ArrayList<Arco>();
             }
-             
-            int[] posX ={-1, 0, 1, 0};
-            int[] posY ={0, 1, 0, -1};
-            
-            for (int i = 0; i < n ; i++) {
-                for (int j = 0; j < m; j++) {
-                    nodoU = i * m + j;
-                    for (int k = 0; k < 4; k++) {
-                        if (!isValid((i + posX[k]), n) || !isValid((j + posY[k]), m)) {
-                            continue;
-                        }
-                        int xAux = (i + posX[k]);
-                        int yAux = (j + posY[k]);
-                        nodoV = xAux * m + yAux;
-                        grafo[nodoU].add(new Arco(nodoU, nodoV, pesos[xAux][yAux]));
-                    }
-                }
+        	
+            for(int i=0; i< numCon;i++){//arma la matriz con los valores ingresados 
+            	entrada=scan.nextLine().split(" ");
+            	Integer nodoPrim=Integer.parseInt(entrada[0]);
+            	Integer nodoSec=Integer.parseInt(entrada[1]);
+            	Integer pesoCon=Integer.parseInt(entrada[2]);
+            	grafo[nodoPrim].add(new Arco(nodoPrim, nodoSec, pesoCon));
+            	grafo[nodoSec].add(new Arco(nodoSec, nodoPrim, pesoCon));
+            	
             }
-            
-//            for (int i = 0; i < n ; i++) {
-//                System.out.println("Nodo " + i + "Vecinos" + grafo[i]);
-//            }
-            
-            System.out.println(dijkstral(source, target));
+         if(dijkstral(origen, destino)<715827882){
+        	 System.out.println(dijkstral(origen, destino));
+        }else{
+        	System.out.println("Inalcanzable");
+        }
+         
         }
     }
 }
+
